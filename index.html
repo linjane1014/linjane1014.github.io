@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>林美霞 | AI内容运营/数据分析</title>
+    <style>
+        :root {
+            --bg-base: #14171a;       
+            --bg-sidebar: #1a1e23;    
+            --card-bg: #22262c;       
+            --card-dark: #1e242a;     
+            --text-main: #e2e4e9;     
+            --text-muted: #8b949e;    
+            --accent: #6b8e9b;        
+            --accent-bright: #00d2ff; 
+            --timeline-line: rgba(107, 142, 155, 0.3); 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-base); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
+
+        /* ================= 左侧侧边栏 ================= */
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; min-height: 100vh; }
+        
+        .sidebar {
+            width: 30%; height: 100vh; position: sticky; top: 0;
+            background-color: var(--bg-sidebar); padding: 5rem 3rem; overflow-y: auto;
+            border-right: 1px solid rgba(255,255,255,0.03); z-index: 100;
+        }
+        
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        
+        .content { width: 70%; padding: 5rem 4rem; }
+
+        .sidebar h1 { font-size: 2.8rem; letter-spacing: 2px; margin-bottom: 0.5rem; font-weight: 300; }
+        .sidebar h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 2rem; font-weight: 500; }
+        .sidebar .contact-info { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 3rem; line-height: 1.8; }
+        .sidebar .award-text { opacity: 0.7; font-size: 0.85rem; margin-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 1rem;}
+        
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 3px;
+            display: flex; align-items: center; transition: all 0.3s; cursor: pointer;
+        }
+        .nav-links a::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--text-muted); margin-right: 15px; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active-nav { color: var(--text-main); }
+        .nav-links a:hover::before, .nav-links a.active-nav::before { width: 40px; background: var(--accent-bright); box-shadow: 0 0 10px var(--accent-bright); }
+
+        /* ================= 动画与发光特效 ================= */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .active { opacity: 1 !important; transform: translate(0,0) !important; }
+        
+        .card-hover { border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s ease; }
+        .card-hover:hover { 
+            transform: translateY(-5px); border-color: var(--accent-bright); 
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 10px rgba(0, 210, 255, 0.1); z-index: 10;
+        }
+
+        section { margin-bottom: 8rem; }
+        .section-title { font-size: 1.5rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+
+        /* ================= 1. 关于我 (外围悬浮防遮挡多轨行星) ================= */
+        .about-grid { display: flex; gap: 4rem; align-items: center; }
+        .about-text-area { flex: 1; font-size: 1.05rem; color: #a9b2bc; }
+        
+        .orbit-container { position: relative; width: 340px; height: 340px; flex-shrink: 0; }
+        
+        .avatar { 
+            position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;
+            width: 100px; height: 100px; border-radius: 50%; object-fit: cover; z-index: 10; 
+            border: 2px solid var(--accent); box-shadow: 0 0 40px rgba(107, 142, 155, 0.4); 
+        }
+        
+        .ring { position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; border-radius: 50%; border: 1px dashed rgba(255,255,255,0.15); z-index: 1; }
+        .ring-1 { width: 160px; height: 160px; }
+        .ring-2 { width: 220px; height: 220px; }
+        .ring-3 { width: 280px; height: 280px; }
+        .ring-4 { width: 340px; height: 340px; }
+
+        .planet-wrapper { 
+            position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; 
+            border-radius: 50%; animation: spin linear infinite; z-index: 5; 
+        }
+        .planet-wrapper-1 { width: 160px; height: 160px; animation-duration: 12s; }
+        .planet-wrapper-2 { width: 220px; height: 220px; animation-duration: 18s; }
+        .planet-wrapper-3 { width: 280px; height: 280px; animation-duration: 25s; }
+        .planet-wrapper-4 { width: 340px; height: 340px; animation-duration: 35s; }
+
+        .planet { 
+            position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.2); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        .p-python { width: 22px; height: 22px; background: radial-gradient(circle at 30% 30%, #4da9ff, #1e2f42); }
+        .p-sql { width: 16px; height: 16px; background: radial-gradient(circle at 30% 30%, #4dc0b5, #1f3630); }
+        .p-ai { width: 26px; height: 26px; background: radial-gradient(circle at 30% 30%, #ff8c42, #853716); }
+        .p-aigc { width: 20px; height: 20px; background: radial-gradient(circle at 30% 30%, #c084fc, #581c87); }
+
+        /* 🔥 终极防遮挡修复：将 top 设置为负数，把文字推到行星的“外围”，并加入文字阴影确保清晰度 */
+        .planet-label { 
+            position: absolute; top: -28px; left: 50%; font-size: 0.75rem; font-weight: 600; color: #fff;
+            animation: spin-reverse linear infinite; white-space: nowrap; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+        .planet-wrapper-1 .planet-label { animation-duration: 12s; }
+        .planet-wrapper-2 .planet-label { animation-duration: 18s; }
+        .planet-wrapper-3 .planet-label { animation-duration: 25s; }
+        .planet-wrapper-4 .planet-label { animation-duration: 35s; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* 加入 translateX(-50%) 确保文字在反向旋转时始终以自我为中心平滑居中 */
+        @keyframes spin-reverse { 
+            0% { transform: translateX(-50%) rotate(0deg); } 
+            100% { transform: translateX(-50%) rotate(-360deg); } 
+        }
+
+        /* ================= 2. 技能库重构 (AI与运营主题) ================= */
+        .skills-universe { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; padding: 2rem 0; }
+
+        .skill-planet-card {
+            border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 1.5rem; color: #fff; transition: all 0.4s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+        .skill-planet-card.card-hover:hover {
+            transform: scale(1.05) translateY(-10px); border-color: var(--accent-bright);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 10px rgba(0, 210, 255, 0.1);
+        }
+
+        .planet-data {
+            width: 210px; height: 210px; background: radial-gradient(circle at 35% 35%, #4b3d30, #22120b);
+            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(255, 140, 66, 0.2); border: 1px solid rgba(255, 140, 66, 0.1);
+        }
+        .planet-ai {
+            width: 230px; height: 230px; background: radial-gradient(circle at 35% 35%, #2c3e50, #141e30);
+            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(77, 169, 255, 0.2); border: 1px solid rgba(77, 169, 255, 0.1);
+            animation-delay: -2s;
+        }
+        .planet-tools {
+            width: 170px; height: 170px; background: radial-gradient(circle at 35% 35%, #2d4545, #0f1c1b);
+            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(77, 192, 181, 0.2); border: 1px solid rgba(77, 192, 181, 0.1);
+            animation-delay: -4s;
+        }
+
+        .skill-planet-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .skill-planet-card p { font-size: 0.85rem; color: #cdd6e0; line-height: 1.4; opacity: 0.8; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* ================= 3. 经历与滴滴项目 ================= */
+        .timeline-container { position: relative; padding-left: 2rem; }
+        .timeline-container::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--timeline-line); }
+        .timeline-item { position: relative; margin-bottom: 4rem; padding-left: 2rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.35rem; top: 0.3rem; width: 14px; height: 14px; border-radius: 50%;
+            background: var(--bg-base); border: 2px solid var(--accent); box-shadow: 0 0 10px rgba(107, 142, 155, 0.4); z-index: 2;
+        }
+        
+        .timeline-date { font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .timeline-content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; }
+        .timeline-content h3 { font-size: 1.35rem; margin-bottom: 0.2rem; color: #fff; }
+        .timeline-content h4 { font-size: 0.95rem; color: var(--text-muted); font-weight: 400; margin-bottom: 1.5rem; }
+        
+        .sub-project { background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 3px solid var(--accent);}
+        .sub-project h5 { font-size: 1.1rem; color: #fff; margin-bottom: 0.8rem; }
+        .sub-project p { font-size: 0.95rem; color: #a9b2bc; margin-bottom: 0.8rem; }
+        
+        .bullet-list { list-style-type: none; margin-left: 0; font-size: 0.9rem; color: #a9b2bc; margin-top: 1rem;}
+        .bullet-list li { margin-bottom: 0.8rem; position: relative; padding-left: 18px;}
+        .bullet-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+
+        .btn-mindmap { 
+            background: #00b4d8; color: #fff; padding: 6px 16px; border-radius: 6px; 
+            border: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; 
+            transition: 0.3s; margin-top: 1rem; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-mindmap:hover { background: #0096c7; box-shadow: 0 0 15px rgba(0, 180, 216, 0.5); transform: translateY(-2px); }
+
+        /* ================= 4. 短项目 (无糖茶卡片) ================= */
+        .didi-card { background: var(--card-dark); border-radius: 16px; padding: 2.5rem; display: flex; flex-direction: column; position: relative; }
+        .didi-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+        .didi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: #1f3630; color: #4dc0b5; }
+        .didi-category { background: rgba(107, 142, 155, 0.1); border: 1px solid rgba(107, 142, 155, 0.3); color: var(--accent); padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        
+        .didi-card h3 { font-size: 1.25rem; color: #fff; margin-bottom: 0.8rem; }
+        .didi-card p { font-size: 0.9rem; color: #949ea8; line-height: 1.6; margin-bottom: 1.5rem; }
+        
+        .didi-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+        .tech-tag { border: 1px solid rgba(255,255,255,0.2); color: #8b949e; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+
+        .project-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .p-tag { font-size: 0.75rem; padding: 4px 10px; background: rgba(107, 142, 155, 0.15); color: var(--accent); border-radius: 15px; border: 1px solid rgba(107, 142, 155, 0.3); }
+        .github-link { display: inline-flex; align-items: center; margin-top: 2rem; padding: 12px 24px; background: transparent; border: 1px solid var(--accent); color: var(--text-main); border-radius: 30px; font-size: 0.9rem; transition: 0.3s; text-decoration: none; font-weight: 500; }
+        .github-link:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(107, 142, 155, 0.4); }
+
+        /* ================= 5. 全屏灯箱组件 ================= */
+        .lightbox-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px);
+        }
+        .lightbox-overlay.active { display: flex; animation: fadeIn 0.3s ease-out forwards; }
+        .lightbox-content { position: relative; width: 95vw; height: 95vh; display: flex; justify-content: center; align-items: center; }
+        .lightbox-content img, .lightbox-content iframe {
+            max-width: 100%; max-height: 100%; width: 100%; height: 100%;
+            object-fit: contain; border: none; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 3rem; cursor: pointer; z-index: 10001; opacity: 0.7; transition: 0.3s; line-height: 1; }
+        .close-btn:hover { opacity: 1; transform: scale(1.1); color: var(--accent-bright); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ================= 移动端适配 ================= */
+        @media (max-width: 900px) {
+            .layout { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 3rem 2rem; z-index: 1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .content { width: 100%; padding: 2rem; }
+            .about-grid { flex-direction: column; text-align: center; }
+            .orbit-container { transform: scale(0.65); margin: 0 auto; }
+            .timeline-container::before { left: 10px; }
+            .timeline-item::before { left: -1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+        <!-- ================= 左侧栏 ================= -->
+        <aside class="sidebar">
+            <h1>林美霞</h1>
+            <h2>AI内容运营 / 数据分析</h2>
+            
+            <div class="contact-info">
+                <p>📍 <strong>意向地：</strong>珠海 (可线下面试)</p>
+                <p>🎓 <strong>中山大学</strong> | 应用统计硕士 (2026-2029)</p>
+                <p>🎓 <strong>华中师大</strong> | 统计学本科 (2022-2026)</p>
+                <p>📱 18176444841 (微信同号)</p>
+                <p>✉️ janelin1014@163.com</p>
+                
+                <div class="award-text">
+                    💡 可稳定出勤4天/周，持续实习6个月以上
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+            </ul>
+        </aside>
+
+        <!-- ================= 右侧区 ================= -->
+        <main class="content">
+
+            <!-- 1. 关于我 -->
+            <section id="about">
+                <div class="about-grid">
+                    <div class="orbit-container reveal-up">
+                        <img src="TX.jpg" alt="头像" class="avatar">
+                        
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                        <div class="ring ring-4"></div>
+
+                        <div class="planet-wrapper planet-wrapper-1">
+                            <div class="planet p-sql"><div class="planet-label">SQL</div></div>
+                        </div>
+                        <div class="planet-wrapper planet-wrapper-2">
+                            <div class="planet p-python"><div class="planet-label">Python</div></div>
+                        </div>
+                        <div class="planet-wrapper planet-wrapper-3">
+                            <div class="planet p-ai"><div class="planet-label">LLM</div></div>
+                        </div>
+                        <div class="planet-wrapper planet-wrapper-4">
+                            <div class="planet p-aigc"><div class="planet-label">AIGC</div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-text-area reveal-up card-hover" style="padding: 1.5rem; border-radius: 12px; border: 1px solid transparent;">
+                        <h2 style="color: #fff; margin-bottom: 1.5rem; font-weight: 300; font-size: 2rem;">你好，<br>我是美霞。</h2>
+                        <p style="margin-bottom: 1rem;">喜欢有一定探索性和数据导向的工作,2022年见证大模型诞生并与大模型共同成长 , ChatGPT/Claud/Gemini/deepseek 重度依赖 ，从 0 到 1 研发多智能体 Agent 系统。</p>
+                        <p style="margin-bottom: 1rem;">滴滴商分实习过程中充分利用公司内部大模型进行工作提效以及产出精美月报html。</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">懂底层逻辑，能动手策划，期待用 AI 为业务团队的内容赋能。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 技能库 (运营适配版) -->
+            <section id="skills">
+                <h2 class="section-title reveal-up">Tech Arsenal</h2>
+                <div class="skills-universe reveal-up">
+                    
+                    <div class="skill-planet-card planet-ai card-hover">
+                        <h3>AI 内容生产</h3>
+                        <p>Gemini / Claude / ChatGPT</p>
+                        <p>Prompt 调优 / HTML图文报告生成</p>
+                    </div>
+
+                    <div class="skill-planet-card planet-data card-hover">
+                        <h3>数据运营与复盘</h3>
+                        <p>Python / SQL / R</p>
+                        <p>指标监控 / 异动归因</p>
+                    </div>
+
+                    <div class="skill-planet-card planet-tools card-hover">
+                        <h3>媒介与工具</h3>
+                        <p>Markdown / Thinkcell / Streamlit</p>
+                        <p>MS Office / 文档策划</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 3. 经历 -->
+            <section id="experience">
+                <h2 class="section-title reveal-up">Experience</h2>
+                
+                <div class="timeline-container">
+                    
+                    <!-- 滴滴实习 -->
+                    <div class="timeline-item reveal-up">
+                        <div class="timeline-date">2026.06 - 2026.09</div>
+                        <div class="timeline-content card-hover">
+                            <h3>滴滴 数据运营与商业分析</h3>
+                            <h4>滴滴企业版（B端）</h4>
+
+                            <!-- 异动归因 -->
+                            <div class="sub-project">
+                                <h5>📌 平台活跃度复盘与用户流转分析</h5>
+                                <p><strong>背景：</strong>核心客户“公司三”接口切至 H5 后活跃用户骤跌。主导排查真实流失情况，梳理用户体验优化方向。</p>
+                                <ul class="bullet-list">
+                                    <li><strong>数据复盘：</strong>对比大盘自然波动，监控兄弟账号日活趋势。证实活跃度暴跌客观存在，为运营决策提供依据。</li>
+                                    <li><strong>流失追踪：</strong>圈定公司三流失群，通过 MD5 匹配跨渠道（兄弟账号及 C 端）的阅读量与活跃度。证实用户未发生活跃转移，确诊为由于接口体验导致的绝对流失。</li>
+                                    <li><strong>增长追踪：</strong>公司二增长数据交叉结果： 94% 的同期增量由原生老客贡献，增长为自然波动。</li>
+                                    <li><strong>持续监控：</strong>产出SQL查询模板供运营持续检测。</li>
+                                </ul>
+                                <button class="btn-mindmap" onclick="openMedia('yidongguiyin.jpg', 'image')">👁️ 查看数据复盘导图</button>
+                            </div>
+                            
+                            <!-- 商旅渗透率 -->
+                            <div class="sub-project">
+                                <h5>📌 B端商旅用户漏斗与分层触达策略</h5>
+                                <p><strong>背景：</strong>结合客户体量与活跃表现，搭建业务分层漏斗，指导后续的精细化内容推送与补贴活动。</p>
+                                <ul class="bullet-list">
+                                    <li><strong>指标提取：</strong>根据新老客活跃节点构建理论上限，通过实际表现计算转化漏斗。</li>
+                                    <li><strong>精准触达：</strong>将客户按转化率切分为四个梯队。策划差异化运营策略（流失召回推送、重点放量补贴等）。</li>
+                                    <li><strong>业务落地：</strong>输出 4 份具有针对性的定向跟进名单，为后续活动的举办与精准分发打下基础。</li>
+                                </ul>
+                                <button class="btn-mindmap" onclick="openMedia('shentou.jpg', 'image')">👁️ 查看用户分层导图</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Caidya 实习 -->
+                    <div class="timeline-item reveal-up">
+                        <div class="timeline-date">2025.12 - 2026.03</div>
+                        <div class="timeline-content card-hover">
+                            <h3>Caidya 临床数据编程支持</h3>
+                            <h4>负责严谨底表文档与逻辑梳理</h4>
+                            <ul class="bullet-list">
+                                <li>撰写并整理核心数据字段文档，保证跨部门沟通常用的数据口径标准统一。</li>
+                                <li>参与构建分析数据集，负责严密的规则逻辑校验与底层维护。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 赛捷斯 实习 -->
+                    <div class="timeline-item reveal-up">
+                        <div class="timeline-date">2025.06 - 2025.08</div>
+                        <div class="timeline-content card-hover">
+                            <h3>武汉赛捷斯科技 数据支持</h3>
+                            <h4>后端交互与数据库维护</h4>
+                            <ul class="bullet-list">
+                                <li>参与搭建内部数据交互后台，优化业务部门的信息提取体验。</li>
+                                <li>负责系统数据的定期更新与维护工作，保障信息的高效触达。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <!-- 4. 重点项目 -->
+            <section id="projects">
+                <h2 class="section-title reveal-up">Projects</h2>
+                
+                <!-- 大项目：自动批改 -->
+                <div class="project-card reveal-up card-hover">
+                    <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.35rem;">基于 Multi-Agent 的教务 AI 工具落地与内容赋能</h3>
+                    <div class="project-tags">
+                        <span class="p-tag">独立开发者</span>
+                        <span class="p-tag">AI 图文渲染</span>
+                        <span class="p-tag">产品化赋能</span>
+                    </div>
+                    <p style="color: #a9b2bc; font-size: 0.95rem; margin-bottom:1rem;"><strong>背景：</strong>教务友好的标准化智能自动批改工具，打通 AI 内容生成的完整链路。</p>
+                    <ul class="bullet-list" style="list-style-type: none; margin-left:0; color:#a9b2bc;">
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>场景策划与指令撰写：</strong>针对数理场景深度应用 Prompt Engineering ，撰写极其严谨的 AI 评分量规与指令流，指导大模型生成标准化解析内容。</li>
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>图文渲染与前端展示：</strong>结合 Streamlit 与 CodeCogs 接口，实现复杂的 LaTeX 公式图文排版，将晦涩的数据转化为交互式的前端使用指南。</li>
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>多渠道内容分发：</strong>实现定制化 HTML 报告单的邮箱自动分发，完成从内容生产到用户触达的闭环。</li>
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>活跃度分析大屏：</strong>利用 Pandas 实时聚合学生的高频错因与得分活跃度，形成可视化大屏，为业务迭代提供直观的数据反馈。</li>
+                    </ul>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
+                        <a href="https://auto-grader-agent-c9ccwvnmlfx4qr88mgtugh.streamlit.app/#1" target="_blank" class="github-link" style="background: var(--accent-bright); color: #000; border: none; font-weight: bold; box-shadow: 0 0 15px rgba(0, 210, 255, 0.4); margin-top: 0;">
+                            🚀 点击直接体验 Agent 应用
+                        </a>
+                        <a href="https://github.com/linjane1014/Auto-Grader-Agent.git" target="_blank" class="github-link" style="margin-top: 0;">
+                            🔗 访问 GitHub 源码库
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 无糖茶项目 -->
+                <div class="didi-card card-hover reveal-up" style="margin-bottom: 2rem;">
+                    <div class="didi-header">
+                        <div class="didi-icon" style="background: #1f3630; color: #4dc0b5;">🍵</div>
+                        <div class="didi-category">省级一等奖</div>
+                    </div>
+                    <h3 style="color: #fff;">无糖茶消费群体画像洞察与内容定位</h3>
+                    <p>担任数据与策略负责人。主导问卷数据清洗，建立核心人群维度，通过逻辑回归挖掘高潜群体的消费痛点，输出极具针对性的产品市场策略与内容宣传建议。</p>
+                    <div class="didi-tech">
+                        <span class="tech-tag">问卷体系设计</span>
+                        <span class="tech-tag">数据交叉验证</span>
+                        <span class="tech-tag">人群画像总结</span>
+                    </div>
+                    <button class="btn-mindmap" onclick="openMedia('WTC.pdf', 'pdf')">📄 预览 PDF 分析报告</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ================= 全局弹窗组件 ================= -->
+    <div class="lightbox-overlay" id="lightbox" onclick="closeMedia(event)">
+        <div class="close-btn" onclick="closeMediaAction()">&times;</div>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="预览图" style="display: none;">
+            <iframe id="lightbox-pdf" src="" style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <!-- ================= 交互脚本 ================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滑入动画
+            const reveals = document.querySelectorAll('.reveal-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(reveal => observer.observe(reveal));
+
+            // 左侧导航栏联动跟随
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active-nav'));
+                        const activeId = entry.target.id;
+                        const activeLink = document.querySelector(`.nav-links a[href="#${activeId}"]`);
+                        if (activeLink) activeLink.classList.add('active-nav');
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px' });
+            sections.forEach(sec => scrollObserver.observe(sec));
+        });
+
+        // 媒体打开与关闭控制
+        function openMedia(src, type) {
+            const lightbox = document.getElementById('lightbox');
+            const imgEl = document.getElementById('lightbox-img');
+            const pdfEl = document.getElementById('lightbox-pdf');
+
+            if (type === 'image') {
+                imgEl.src = src; imgEl.style.display = 'block';
+                pdfEl.style.display = 'none'; pdfEl.src = '';
+            } else if (type === 'pdf') {
+                pdfEl.src = src; pdfEl.style.display = 'block';
+                imgEl.style.display = 'none'; imgEl.src = '';
+            }
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeMediaAction() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; 
+            document.getElementById('lightbox-pdf').src = '';
+            document.getElementById('lightbox-img').src = '';
+        }
+
+        function closeMedia(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                closeMediaAction();
+            }
+        }
+    </script>
+</body>
+</html>
