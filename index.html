@@ -6,21 +6,19 @@
     <title>林美霞 | 数据分析</title>
     <style>
         :root {
-            --bg-base: #14171a;       
-            --bg-sidebar: #1a1e23;    
-            --card-bg: #22262c;       
+            --bg-base: #14171a;      
+            --bg-sidebar: #1a1e23;     
+            --card-bg: #22262c;      
             --card-dark: #1e242a;     
             --text-main: #e2e4e9;     
-            --text-muted: #8b949e;    
-            --accent: #6b8e9b;        
-            --accent-bright: #00d2ff; 
-            --timeline-line: rgba(107, 142, 155, 0.3); 
+            --text-muted: #8b949e;     
+            --accent: #6b8e9b;       
+            --accent-bright: #00d2ff;  
+            --timeline-line: rgba(107, 142, 155, 0.3);  
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, sans-serif; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-base); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
-
         /* ================= 左侧侧边栏 ================= */
         .layout { display: flex; max-width: 1400px; margin: 0 auto; min-height: 100vh; }
         
@@ -34,7 +32,6 @@
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
         
         .content { width: 70%; padding: 5rem 4rem; }
-
         .sidebar h1 { font-size: 2.8rem; letter-spacing: 2px; margin-bottom: 0.5rem; font-weight: 300; }
         .sidebar h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 2rem; font-weight: 500; }
         .sidebar .contact-info { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 3rem; line-height: 1.8; }
@@ -49,7 +46,6 @@
         .nav-links a::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--text-muted); margin-right: 15px; transition: 0.3s; }
         .nav-links a:hover, .nav-links a.active-nav { color: var(--text-main); }
         .nav-links a:hover::before, .nav-links a.active-nav::before { width: 40px; background: var(--accent-bright); box-shadow: 0 0 10px var(--accent-bright); }
-
         /* ================= 动画与发光特效 ================= */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .active { opacity: 1 !important; transform: translate(0,0) !important; }
@@ -59,10 +55,8 @@
             transform: translateY(-5px); border-color: var(--accent-bright); 
             box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 10px rgba(0, 210, 255, 0.1); z-index: 10;
         }
-
         section { margin-bottom: 8rem; }
         .section-title { font-size: 1.5rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
-
         /* ================= 1. 关于我 (防遮挡多轨行星) ================= */
         .about-grid { display: flex; gap: 4rem; align-items: center; }
         .about-text-area { flex: 1; font-size: 1.05rem; color: #a9b2bc; }
@@ -80,7 +74,6 @@
         .ring-2 { width: 220px; height: 220px; }
         .ring-3 { width: 280px; height: 280px; }
         .ring-4 { width: 340px; height: 340px; }
-
         .planet-wrapper { 
             position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; 
             border-radius: 50%; animation: spin linear infinite; z-index: 5; 
@@ -89,7 +82,6 @@
         .planet-wrapper-2 { width: 220px; height: 220px; animation-duration: 18s; }
         .planet-wrapper-3 { width: 280px; height: 280px; animation-duration: 25s; }
         .planet-wrapper-4 { width: 340px; height: 340px; animation-duration: 35s; }
-
         .planet { 
             position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
             border-radius: 50%; box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.2); 
@@ -100,7 +92,6 @@
         .p-sql { width: 16px; height: 16px; background: radial-gradient(circle at 30% 30%, #4dc0b5, #1f3630); }
         .p-ai { width: 26px; height: 26px; background: radial-gradient(circle at 30% 30%, #ff8c42, #853716); }
         .p-aigc { width: 20px; height: 20px; background: radial-gradient(circle at 30% 30%, #c084fc, #581c87); }
-
         .planet-label { 
             position: absolute; top: -28px; left: 50%; font-size: 0.75rem; font-weight: 600; color: #fff;
             animation: spin-reverse linear infinite; white-space: nowrap; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -109,26 +100,18 @@
         .planet-wrapper-2 .planet-label { animation-duration: 18s; }
         .planet-wrapper-3 .planet-label { animation-duration: 25s; }
         .planet-wrapper-4 .planet-label { animation-duration: 35s; }
-
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes spin-reverse { 
             0% { transform: translateX(-50%) rotate(0deg); } 
             100% { transform: translateX(-50%) rotate(-360deg); } 
         }
-
         /* ================= 2. 技能库重构 ================= */
         .skills-universe { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; padding: 2rem 0; }
-
         .skill-planet-card {
             border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 1.5rem; color: #fff; transition: all 0.4s ease;
             animation: float 6s ease-in-out infinite;
         }
-        .skill-planet-card.card-hover:hover {
-            transform: scale(1.05) translateY(-10px); border-color: var(--accent-bright);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.3), inset 0 0 10px rgba(0, 210, 255, 0.1);
-        }
-
         .planet-data {
             width: 210px; height: 210px; background: radial-gradient(circle at 35% 35%, #4b3d30, #22120b);
             box-shadow: inset -10px -10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(255, 140, 66, 0.2); border: 1px solid rgba(255, 140, 66, 0.1);
@@ -143,12 +126,10 @@
             box-shadow: inset -10px -10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(77, 192, 181, 0.2); border: 1px solid rgba(77, 192, 181, 0.1);
             animation-delay: -4s;
         }
-
         .skill-planet-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
         .skill-planet-card p { font-size: 0.85rem; color: #cdd6e0; line-height: 1.4; opacity: 0.8; }
-
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-
+        
         /* ================= 3. 经历与滴滴项目 ================= */
         .timeline-container { position: relative; padding-left: 2rem; }
         .timeline-container::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--timeline-line); }
@@ -170,13 +151,26 @@
         .bullet-list { list-style-type: none; margin-left: 0; font-size: 0.9rem; color: #a9b2bc; margin-top: 1rem;}
         .bullet-list li { margin-bottom: 0.8rem; position: relative; padding-left: 18px;}
         .bullet-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
-
         .btn-mindmap { 
             background: #00b4d8; color: #fff; padding: 6px 16px; border-radius: 6px; 
             border: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; 
             transition: 0.3s; margin-top: 1rem; display: inline-flex; align-items: center; gap: 6px;
         }
         .btn-mindmap:hover { background: #0096c7; box-shadow: 0 0 15px rgba(0, 180, 216, 0.5); transform: translateY(-2px); }
+        
+        /* ================= 项目日期角标 ================= */
+        .project-date-badge {
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            background: rgba(107, 142, 155, 0.1);
+            border: 1px solid rgba(107, 142, 155, 0.3);
+            color: var(--accent);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
 
         /* ================= 4. 短项目 ================= */
         .didi-card { background: var(--card-dark); border-radius: 16px; padding: 2.5rem; display: flex; flex-direction: column; position: relative; }
@@ -189,13 +183,12 @@
         
         .didi-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
         .tech-tag { border: 1px solid rgba(255,255,255,0.2); color: #8b949e; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
-
-        .project-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem; }
+        .project-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem; position: relative; }
         .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
         .p-tag { font-size: 0.75rem; padding: 4px 10px; background: rgba(107, 142, 155, 0.15); color: var(--accent); border-radius: 15px; border: 1px solid rgba(107, 142, 155, 0.3); }
         .github-link { display: inline-flex; align-items: center; margin-top: 2rem; padding: 12px 24px; background: transparent; border: 1px solid var(--accent); color: var(--text-main); border-radius: 30px; font-size: 0.9rem; transition: 0.3s; text-decoration: none; font-weight: 500; }
         .github-link:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(107, 142, 155, 0.4); }
-
+        
         /* ================= 5. 全屏灯箱组件 ================= */
         .lightbox-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -209,8 +202,7 @@
         }
         .close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 3rem; cursor: pointer; z-index: 10001; opacity: 0.7; transition: 0.3s; line-height: 1; }
         .close-btn:hover { opacity: 1; transform: scale(1.1); color: var(--accent-bright); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        
         /* ================= 移动端适配 ================= */
         @media (max-width: 900px) {
             .layout { flex-direction: column; }
@@ -220,11 +212,11 @@
             .orbit-container { transform: scale(0.65); margin: 0 auto; }
             .timeline-container::before { left: 10px; }
             .timeline-item::before { left: -1.8rem; }
+            .project-date-badge { top: 1.5rem; right: 1.5rem; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
-
     <div class="layout">
         <!-- ================= 左侧栏 ================= -->
         <aside class="sidebar">
@@ -232,17 +224,16 @@
             <h2>数据/商业分析</h2>
             
             <div class="contact-info">
-                <p>📍 <strong>状态：</strong>研一，随时到岗，可稳定实习 6 个月</p>
-                <p>🎓 <strong>中山大学</strong> | 应用统计硕士 (2026-2029)</p>
-                <p>🎓 <strong>华中师大</strong> | 统计学本科 (2022-2026)</p>
-                <p>📱 18176444841 (微信同号)</p>
+                <p>📍 <strong>状态：</strong>随时到岗，一周可到岗5天，导师允许长期实习</p>
+                <p>🎓 <strong>中山大学</strong> | 应用统计 研一 (2026-2029)</p>
+                <p>🎓 <strong>华中师大</strong> | 统计学 本科 (2022-2026)</p>
+                <p>📱 1817644841 (微信同号)</p>
                 <p>✉️ janelin1014@163.com</p>
                 
                 <div class="award-text">
                     🏆 国家励志奖学金 / 全国大学生数竞三等奖 / 优秀毕业生
                 </div>
             </div>
-
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -250,10 +241,8 @@
                 <li><a href="#projects">Projects</a></li>
             </ul>
         </aside>
-
         <!-- ================= 右侧区 ================= -->
         <main class="content">
-
             <!-- 1. 关于我 -->
             <section id="about">
                 <div class="about-grid">
@@ -264,7 +253,6 @@
                         <div class="ring ring-2"></div>
                         <div class="ring ring-3"></div>
                         <div class="ring ring-4"></div>
-
                         <div class="planet-wrapper planet-wrapper-1">
                             <div class="planet p-sql"><div class="planet-label">SQL</div></div>
                         </div>
@@ -287,10 +275,9 @@
                     </div>
                 </div>
             </section>
-
             <!-- 2. 技能库 (数分硬核版) -->
             <section id="skills">
-                <h2 class="section-title reveal-up">Tech Arsenal</h2>
+                <h2 class="section-title reveal-up">SKILLS</h2>
                 <div class="skills-universe reveal-up">
                     
                     <div class="skill-planet-card planet-data card-hover">
@@ -298,22 +285,18 @@
                         <p>Python / SQL / Excel</p>
                         <p>指标监控 / 异动归因</p>
                     </div>
-
                     <div class="skill-planet-card planet-ai card-hover">
                         <h3>AI 内容赋能</h3>
                         <p>Gemini / Claude / ChatGPT</p>
                         <p>Prompt 调优 / AI 辅助数据处理</p>
                     </div>
-
                     <div class="skill-planet-card planet-tools card-hover">
                         <h3>媒介与工具</h3>
                         <p>Markdown / Think-Cell / Streamlit</p>
                         <p>MS Office / 分析文档整理</p>
                     </div>
-
                 </div>
             </section>
-
             <!-- 3. 经历 -->
             <section id="experience">
                 <h2 class="section-title reveal-up">Experience</h2>
@@ -322,17 +305,16 @@
                     
                     <!-- 滴滴实习 -->
                     <div class="timeline-item reveal-up">
-                        <div class="timeline-date">2026.06 - 2026.09</div>
+                        <div class="timeline-date">2026.05 - 2026.09</div>
                         <div class="timeline-content card-hover">
                             <h3>滴滴 商业分析实习生</h3>
                             <h4>滴滴企业版（B端）</h4>
-
                             <!-- 异动归因 -->
                             <div class="sub-project">
                                 <h5>📌 核心客户订单异动排查与归因分析</h5>
                                 <p><strong>背景：</strong>核心大客户接口切换至 H5 后某子账号日活骤降，一子账户日活上升，需评估改版影响及真实流失率。</p>
                                 <ul class="bullet-list">
-                                    <li><strong>数据复盘：</strong>对照大盘整体业务、同集团其他账号的趋势做交叉比对。证实活跃度暴跌客观存在，为业务决策提供事实依据。</li>
+                                    <li><strong>数据复盘：</strong>对照大盘整体业务、同集团其他兄弟账号的趋势做交叉比对。证实活跃度暴跌客观存在，为业务决策提供事实依据。</li>
                                     <li><strong>流失追踪：</strong>圈定流失用户群体，通过 MD5 手机号跨账号匹配，追踪用户流向至集团内其他企业账号以及滴滴 C 端个人端。经核查，用户并未迁移至其他滴滴体系账号，判定为接口体验问题带来的真实业务流失。</li>
                                     <li><strong>增量分析：</strong>对同期另一个账号的订单上涨做拆解，数据证实 94% 增量来自原有老客的自然业务波动，并非承接流失的用户流量。</li>
                                     <li><strong>持续监控：</strong>产出可复用 SQL 查询模板，方便业务同学持续监控大客户账号健康状态。</li>
@@ -351,46 +333,32 @@
                                 </ul>
                                 <button class="btn-mindmap" onclick="openMedia('shentou.jpg', 'image')">👁️ 查看分层渗透导图</button>
                             </div>
-
                         </div>
                     </div>
 
                     <!-- Caidya 实习 -->
                     <div class="timeline-item reveal-up">
-                        <div class="timeline-date">2025.12 - 2026.03</div>
+                        <div class="timeline-date">2025.11 - 2026.03</div>
                         <div class="timeline-content card-hover">
                             <h3>Caidya 临床数据分析实习生</h3>
                             <h4>数据标准化与统计支持</h4>
                             <ul class="bullet-list">
-                                <li><strong>底层清洗：</strong>负责处理底层繁杂的医疗字段，编写 SAS 脚本构建 SDTM数据集（数据标准化） ，解决多源数据口径不一致问题。</li>
-                                <li><strong>分析支撑：</strong>参与 ADaM 分析数据集初步构建，为最终的临床结果量化评估与统计分析提供可靠的数据集支撑。</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 赛捷斯 实习 -->
-                    <div class="timeline-item reveal-up">
-                        <div class="timeline-date">2025.06 - 2025.08</div>
-                        <div class="timeline-content card-hover">
-                            <h3>武汉赛捷斯科技 数据处理与后端支持</h3>
-                            <h4>数据库维护与接口开发</h4>
-                            <ul class="bullet-list">
-                                <li><strong>表结构设计：</strong>参与设计与优化 MySQL 底层数据表结构，提升业务数据检索与跨表查询效率。</li>
-                                <li><strong>后端搭建：</strong>基于 Python Flask 开发轻量级数据交互接口，保障前端数据可视化大屏的平稳传输。</li>
+                                <li><strong>数据标准化：</strong>负责处理底层繁杂的医疗字段，编写 SAS 脚本构建 SDTM数据集（数据标准化） ，解决多源数据口径不一致问题。</li>
+                                <li><strong>数据分析支撑：</strong>参与 ADaM 分析数据集初步构建，为最终的临床结果量化评估与统计分析提供可靠的数据集支撑。</li>
                             </ul>
                         </div>
                     </div>
                     
                 </div>
             </section>
-
             <!-- 4. 重点项目 -->
             <section id="projects">
                 <h2 class="section-title reveal-up">Projects</h2>
                 
                 <!-- 大项目：自动批改 -->
                 <div class="project-card reveal-up card-hover">
-                    <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.35rem;">基于 Multi-Agent 的教务数据管线与学情分析系统</h3>
+                    <div class="project-date-badge">2026.09</div>
+                    <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.35rem;">基于 Multi-Agent 的智能数据处理与学情分析系统</h3>
                     <div class="project-tags">
                         <span class="p-tag">人机协同交互</span>
                         <span class="p-tag">Pandas 数据聚合</span>
@@ -412,11 +380,29 @@
                     </div>
                 </div>
 
+                <!-- 数据交互平台项目 -->
+                <div class="project-card reveal-up card-hover">
+                    <div class="project-date-badge">2025.06 - 2025.08</div>
+                    <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.35rem;">企业内部数据交互平台建设项目（武汉赛捷斯科技）</h3>
+                    <div class="project-tags">
+                        <span class="p-tag">Flask 后端</span>
+                        <span class="p-tag">MySQL 表结构优化</span>
+                        <span class="p-tag">数据传输支撑</span>
+                    </div>
+                    <ul class="bullet-list" style="list-style-type: none; margin-left:0; color:#a9b2bc;">
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>后端接口开发：</strong>基于 Python Flask 开发轻量级数据交互接口，保障前端数据可视化大屏的平稳传输。</li>
+                        <li style="position:relative; padding-left:18px; margin-bottom:8px;"><span style="position:absolute; left:0; color:var(--accent);">▹</span><strong>数据库优化：</strong>参与设计与优化 MySQL 底层数据表结构，提升业务数据检索与跨表查询效率。</li>
+                    </ul>
+                </div>
+
                 <!-- 无糖茶项目 -->
                 <div class="didi-card card-hover reveal-up" style="margin-bottom: 2rem;">
                     <div class="didi-header">
                         <div class="didi-icon" style="background: #1f3630; color: #4dc0b5;">🍵</div>
-                        <div class="didi-category">省级一等奖</div>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <div class="didi-category">省级一等奖</div>
+                            <div class="project-date-badge" style="position: static; margin: 0;">2023.12 - 2024.03</div>
+                        </div>
                     </div>
                     <h3 style="color: #fff;">无糖茶消费群体用户画像洞察（建模负责人）</h3>
                     <p>主导问卷数据的清洗与特征工程，提取消费频次等核心业务指标。运用 Python 进行交叉分析，使用卡方检验与 ANOVA 验证人群显著性差异；构建 Logistic 回归模型锁定高潜力客群的核心特征，输出精准的营销策略报告。</p>
@@ -430,7 +416,6 @@
             </section>
         </main>
     </div>
-
     <!-- ================= 全局弹窗组件 ================= -->
     <div class="lightbox-overlay" id="lightbox" onclick="closeMedia(event)">
         <div class="close-btn" onclick="closeMediaAction()">&times;</div>
@@ -439,7 +424,6 @@
             <iframe id="lightbox-pdf" src="" style="display: none;"></iframe>
         </div>
     </div>
-
     <!-- ================= 交互脚本 ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -453,7 +437,6 @@
                 });
             }, { threshold: 0.1 });
             reveals.forEach(reveal => observer.observe(reveal));
-
             // 左侧导航栏联动跟随
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-links a');
@@ -469,13 +452,11 @@
             }, { rootMargin: '-20% 0px -70% 0px' });
             sections.forEach(sec => scrollObserver.observe(sec));
         });
-
         // 媒体打开与关闭控制
         function openMedia(src, type) {
             const lightbox = document.getElementById('lightbox');
             const imgEl = document.getElementById('lightbox-img');
             const pdfEl = document.getElementById('lightbox-pdf');
-
             if (type === 'image') {
                 imgEl.src = src; imgEl.style.display = 'block';
                 pdfEl.style.display = 'none'; pdfEl.src = '';
@@ -486,7 +467,6 @@
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden'; 
         }
-
         function closeMediaAction() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
@@ -494,7 +474,6 @@
             document.getElementById('lightbox-pdf').src = '';
             document.getElementById('lightbox-img').src = '';
         }
-
         function closeMedia(e) {
             const lightbox = document.getElementById('lightbox');
             if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
